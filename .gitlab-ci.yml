@@ -1,0 +1,15 @@
+stages:
+  - test
+
+test artifact:
+  stage: test
+  image: maven:latest
+  script:
+    - mvn clean verify -Denvironment=dev serenity:aggregate
+  artifacts:
+    when: always
+    paths:
+      - ./target/site/serenity
+    reports:
+      junit:
+        - target/failsafe-reports/TEST-*.xml
